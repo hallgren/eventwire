@@ -2,6 +2,11 @@ require 'bunny'
 
 class Eventwire::Drivers::Bunny
   
+    
+  def metaclass
+    class << self; self; end
+  end
+
   def publish(event_name, event_data = nil)
     Bunny.run do |mq|
       mq.exchange(event_name.to_s, :type => :fanout).publish(event_data)

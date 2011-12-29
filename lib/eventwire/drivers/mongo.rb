@@ -7,6 +7,10 @@ class Eventwire::Drivers::Mongo
     @handlers = []
   end
 
+  def metaclass
+    class << self; self; end
+  end
+
   def publish(event_name, event_data = nil)
     collection = db.collection('event_handlers')
     collection.find(:event_name => event_name).each do |handler|

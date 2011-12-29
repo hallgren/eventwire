@@ -7,5 +7,6 @@ module Eventwire
     autoload :Bunny,     'eventwire/drivers/bunny'
     autoload :Redis,     'eventwire/drivers/redis'
     autoload :Mongo,     'eventwire/drivers/mongo'
+    autoload :AMQP_UPPTEC, 'eventwire/drivers/amqp_upptec'
   end
 end

@@ -9,5 +9,6 @@ module Eventwire
     autoload :JSONSerializer,        'eventwire/middleware/json_serializer'
     autoload :BSONSerializer,        'eventwire/middleware/bson_serializer'
     autoload :MessagePackSerializer, 'eventwire/middleware/msgpack_serializer'
+    autoload :EventValidatorHandler, 'eventwire/middleware/event_validator_handler'
   end
 end

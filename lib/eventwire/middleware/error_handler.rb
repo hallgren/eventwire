@@ -4,6 +4,7 @@ module Eventwire
 
       def initialize(app, options = {})
         super(app)
+        #puts options
         @error_handler = options.delete(:error_handler) || lambda{|ex|}
         @logger = options.delete(:logger) || ::Logger.new(nil)
       end

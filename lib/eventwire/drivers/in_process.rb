@@ -2,6 +2,10 @@ class Eventwire::Drivers::InProcess
   def initialize
     @handlers = {}
   end
+
+  def metaclass
+    class << self; self; end
+  end
   
   def handlers(event_name)
     @handlers[event_name] ||= []

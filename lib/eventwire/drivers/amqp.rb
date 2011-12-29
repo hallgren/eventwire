@@ -2,6 +2,12 @@ require 'bunny'
 require 'amqp'
 
 class Eventwire::Drivers::AMQP
+
+
+  def metaclass
+    class << self; self; end
+  end
+  
   def publish(event_name, event_data = nil)
     Bunny.run do |mq|
       mq.exchange(event_name.to_s, :type => :fanout).publish(event_data)
@@ -14,6 +20,7 @@ class Eventwire::Drivers::AMQP
 
   def start
     AMQP.start do
+      puts subscriptions.count
       subscriptions.each {|subscription| bind_subscription(*subscription) }
     end
   end
@@ -44,6 +51,7 @@ class Eventwire::Drivers::AMQP
 
       queue.bind(fanout).subscribe do |json_data|
         handler.call json_data
+        puts "end sub"
       end
     end
   end

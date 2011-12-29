@@ -13,15 +13,31 @@ describe Eventwire::Publisher do
     subject { class_including(Eventwire::Publisher).new }
     
     it 'should publish the event using the current driver' do
+       middleware1 = Eventwire::Middleware::JSONSerializer
+       Eventwire.middleware.replace [[middleware1]]
+      Eventwire.driver = @driver
       Eventwire.driver.should_receive(:publish).with(:task_created, anything)
       
       subject.publish_event :task_created
+      # puts Eventwire.driver
+      # Eventwire.driver.app.should be(middleware1)
     end
     
     it 'should publish the event with its data using the current driver' do
       Eventwire.driver.should_receive(:publish).with(:task_created, :task_name => 'Cleaning')
       
       subject.publish_event :task_created, :task_name => 'Cleaning'
+    end
+
+    it 'should publish the event using the current driver and json formated data' do
+       middleware1 = Eventwire::Middleware::JSONSerializer
+       Eventwire.middleware.replace [[middleware1]]
+      Eventwire.driver = @driver
+      Eventwire.driver.should_receive(:publish).with(:task_created, '{"name":"eventwire"}')
+      
+      subject.publish_event :task_created, :name => "eventwire"
+      # puts Eventwire.driver
+      # Eventwire.driver.app.should be(middleware1)
     end
     
   end

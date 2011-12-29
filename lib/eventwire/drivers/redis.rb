@@ -5,6 +5,10 @@ class Eventwire::Drivers::Redis
   def initialize
     @handlers = []
   end
+
+  def metaclass
+    class << self; self; end
+  end
   
   def publish(event_name, event_data = nil)
     redis = ::Redis.new

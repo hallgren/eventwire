@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'timeout'
 
-shared_examples_for 'a driver with single-process support' do
+shared_examples_for 'a driver with single-process support with only one subscriber' do
   
   def start_worker
     @t = Thread.new { subject.start }
@@ -69,7 +69,7 @@ shared_examples_for 'a driver with single-process support' do
   
 end
 
-shared_examples_for 'a driver with multi-process support' do
+shared_examples_for 'a driver with multi-process support with only one subscriber' do
 
   before do
     initialize_proccesses   
@@ -97,12 +97,9 @@ shared_examples_for 'a driver with multi-process support' do
   end
   
   example 'several subscribers' do
-    process do
-      subject.subscribe(:this_event, :first_subscriber) { shout! }
-      subject.start
-    end
     
     process do
+      subject.subscribe(:this_event, :first_subscriber) { shout! }
       subject.subscribe(:this_event, :other_subscriber) { shout! }
       subject.start
     end
@@ -114,55 +111,6 @@ shared_examples_for 'a driver with multi-process support' do
     
     eventually do
       @shoutings.should == 2
-    end
-  end
-  
-  example 'second subscriber coming later' do
-    process do
-      subject.subscribe(:this_event, :first_subscriber) { shout! }
-      subject.start
-    end
-    
-    process do
-      wait_for_subscribers
-      subject.publish :this_event
-    end
-    
-    eventually do
-      @shoutings.should == 1
-    end
-    
-    process do
-      subject.subscribe(:this_event, :other_subscriber) { shout! }
-      subject.start
-    end
-    
-    process do
-      wait_for_subscribers
-      subject.publish :this_event
-    end
-    
-    eventually do
-      @shoutings.should == 3
-    end
-  end
-
-  example 'several instances of same subscriber' do
-    2.times do
-      process do
-        puts "!"
-        subject.subscribe(:this_event, :first_subscriber) { shout! }
-        subject.start
-      end
-    end
-    
-    process do
-      wait_for_subscribers
-      subject.publish :this_event
-    end
-    
-    eventually do
-      @shoutings.should == 1
     end
   end
   
