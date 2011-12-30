@@ -11,6 +11,7 @@ shared_examples_for 'a driver with single-process support with only one subscrib
 
   after do
     subject.stop
+    sleep 0.1
     subject.purge
     if @t
       @t.join(1)

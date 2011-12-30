@@ -14,9 +14,18 @@ module Eventwire
           begin
             handler.call(data)
           rescue Exception => ex
-            @logger.error "\nAn error occurred: `#{ex.message}`\n#{ex.backtrace.join("\n")}\n"
+            @logger.error "\nAn error occurred in (subscribe): `#{ex.message}`\n#{ex.backtrace.join("\n")}\n"
             @error_handler.call(ex)
           end
+        end
+      end
+
+      def handle_event(event_name, event_data)
+        begin
+          @app.handle_event event_name, event_data
+        rescue Exception => ex
+          @logger.error "\nAn error occurred in (hadnle_event): `#{ex.message}`\n#{ex.backtrace.join("\n")}\n"
+          @error_handler.call(ex)
         end
       end
       

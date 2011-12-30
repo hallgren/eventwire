@@ -25,6 +25,15 @@ describe 'Eventwire configuration' do
       
       Eventwire.driver.should be_an_instance_of(Eventwire::Drivers::AwesomeDriver)
     end
+
+     it 'can create a AMQP_UPPTEC driver with init parameters' do
+      Eventwire::Drivers::AMQP_UPPTEC = Class.new
+      
+      Eventwire.driver = Eventwire::Drivers::AMQP_UPPTEC.new({:host => "testhost", :event_ex => "test_ex"})
+      
+      Eventwire.driver.should be_an_instance_of(Eventwire::Drivers::AMQP_UPPTEC)
+    end
+   
     
     context 'driver decoration' do
       

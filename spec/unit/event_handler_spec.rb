@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Eventwire::EventHandler do
   
-  describe '#handle event' do
+  describe 'handle event' do
     
     before do
       @driver = mock
@@ -21,6 +21,8 @@ describe Eventwire::EventHandler do
       
       subject.handle_event :task_created, '{"name":"eventwire"}'
     end
+
+   
     
   end
 end

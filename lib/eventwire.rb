@@ -22,7 +22,7 @@ module Eventwire
   
     def driver=(driver)
       klass = Drivers.const_get(driver.to_sym) if driver.respond_to?(:to_sym)
-      @driver = decorate(klass ? klass.new : driver)
+      @driver = decorate(klass ? klass.new() : driver)
     end
     
     def logger
@@ -64,8 +64,8 @@ module Eventwire
 
     def on_event_validation(&block)
 
-      driver.metaclass.send(:define_method, 'event_validator') do
-        block.call
+      driver.metaclass.send(:define_method, 'event_validator') do |event|
+        block.call event
       end
 
     end
@@ -76,8 +76,8 @@ module Eventwire
 
     def on_event_creation(&block)
 
-      driver.metaclass.send(:define_method, 'event_creator') do
-        block.call
+      driver.metaclass.send(:define_method, 'event_creator') do |event|
+        block.call event
       end
 
     end

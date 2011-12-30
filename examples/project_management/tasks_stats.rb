@@ -8,12 +8,10 @@ module TasksStats
   @start_times = {}
 
   on :task_created do |event|
-    puts "task_created ON"
     @start_times[event.task_name] = Time.parse(event.timestamp.to_s)
   end
 
   on :task_completed do |event|
-    puts "task_completed ON"
     @completion_time_sum   += Time.parse(event.timestamp.to_s) - @start_times.delete(event.task_name)
     @completion_time_count += 1
   end

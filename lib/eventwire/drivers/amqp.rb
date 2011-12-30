@@ -51,7 +51,6 @@ class Eventwire::Drivers::AMQP
 
       queue.bind(fanout).subscribe do |json_data|
         handler.call json_data
-        puts "end sub"
       end
     end
   end
