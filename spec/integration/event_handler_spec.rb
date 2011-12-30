@@ -12,7 +12,7 @@ describe 'Integration test on the handle event function' do
       before do
         
         
-        Eventwire.driver = Eventwire::Drivers::AMQP_UPPTEC.new({:host => "localhost"})
+        Eventwire.driver = Eventwire::Drivers::AMQP_UPPTEC.new({:event_host => "localhost"})
         Eventwire.on_event_creation() { |event| Event.add(event) }
         Eventwire.on_event_validation() { |event| Event.check(event) == false ? true : false}
 
