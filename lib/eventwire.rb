@@ -50,7 +50,6 @@ module Eventwire
     end
   
     def on_error(&block)
-      puts "on error"
       @error_handler = block
     end
     

@@ -50,7 +50,6 @@ class Eventwire::Drivers::AMQP_UPPTEC
   end
 
   def start
-    puts "Start #{@host}"
     AMQP.start(:host => @host, :port => @port, :user => @user, :pass => @password, :vhost => @vhost) do |connection|
   
       AMQP::Channel.new(connection, 2, :auto_recovery => true) do |channel|
