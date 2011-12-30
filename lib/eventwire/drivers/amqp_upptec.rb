@@ -26,7 +26,7 @@ class Eventwire::Drivers::AMQP_UPPTEC
     @command_ex = "command_ex"
     @event_ex = "event_ex"
     @event_queue = "event_queue"
-    @error_ex = @event_ex
+   # @error_ex = @event_ex
 
 
     if args.length > 0
@@ -46,7 +46,7 @@ class Eventwire::Drivers::AMQP_UPPTEC
       @command_ex = args[0][:command_ex] if !args[0][:command_ex].nil?
       @event_ex = args[0][:event_ex] if !args[0][:event_ex].nil?
       @event_queue = args[0][:event_queue] if !args[0][:event_queue].nil?
-      @error_ex = args[0][:error_ex] if !args[0][:error_ex].nil?
+      #@error_ex = args[0][:error_ex] if !args[0][:error_ex].nil?
 
     end
 
