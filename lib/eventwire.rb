@@ -98,8 +98,8 @@ module Eventwire
     def middleware
       @middleware ||= [ [Eventwire::Middleware::ErrorHandler, {:error_handler => Eventwire.error_handler, :logger => Eventwire.logger}],
                         [Eventwire::Middleware::Logger, {:logger => Eventwire.logger}],
-                         Eventwire::Middleware::JSONSerializer]
-                       #  Eventwire::Middleware::DataObjects]
+                         Eventwire::Middleware::JSONSerializer],
+                         Eventwire::Middleware::DataObjects]
                     #    [Eventwire::Middleware::EventValidatorHandler, {:event_creator_handler => Eventwire.event_creator_handler ,:event_validator_handler => Eventwire.event_validator_handler, :error_handler => Eventwire.error_handler}] ]
     end
     
