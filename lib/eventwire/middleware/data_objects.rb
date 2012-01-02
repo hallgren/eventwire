@@ -5,9 +5,14 @@ module Eventwire
     class DataObjects < Base
       def subscribe(event_name, handler_id, &handler)
         @app.subscribe event_name, handler_id do |data|
-          puts "biuld hash from #{data}"
+          puts "biuld hash subscribe from #{data}"
           handler.call build_event(data)
         end
+      end
+
+      def handle_event(event_name, event_data)
+        puts "biuld hash handle event #{event_name} #{event_data}"
+        @app.handle_event event_name, build_event(event_data)
       end
 
       private
