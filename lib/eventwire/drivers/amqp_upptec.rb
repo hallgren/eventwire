@@ -131,7 +131,7 @@ class Eventwire::Drivers::AMQP_UPPTEC
   end
 
   def handle_event event_name, event_data
-    puts "handle event #{event_name} #{event_data}"
+    puts "handle event main #{event_name} #{event_data}"
     event_not_already_handled = true
 
     if self.respond_to?('event_validator')
@@ -140,6 +140,7 @@ class Eventwire::Drivers::AMQP_UPPTEC
 
     if event_not_already_handled
       subscriptions.each do |subscription|
+
         if (subscription[0].to_s == event_name)
           puts "sub call #{event_data} #{subscription}"
           subscription[2].call event_data           
