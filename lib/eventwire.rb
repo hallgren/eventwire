@@ -17,6 +17,7 @@ module Eventwire
     end
     
     def driver
+      puts "DRIVER init() #{@driver}"
       @driver ||= decorate(Drivers::InProcess.new)
     end
   
