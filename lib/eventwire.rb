@@ -21,6 +21,7 @@ module Eventwire
     end
   
     def driver=(driver)
+      puts "DRIVER  #{driver}"
       klass = Drivers.const_get(driver.to_sym) if driver.respond_to?(:to_sym)
       @driver = decorate(klass ? klass.new() : driver)
     end
