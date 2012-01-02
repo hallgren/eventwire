@@ -23,9 +23,9 @@ class Eventwire::Drivers::AMQP_UPPTEC
     @command_password = "guest"
     @command_vhost = "/"
 
-    @command_ex = "command_ex"
-    @event_ex = "event_ex"
-    @event_queue = "event_queue"
+    @command_ex = "command_ex3"
+    @event_ex = "event_ex3"
+    @event_queue = "event_queue3"
    # @error_ex = @event_ex
 
 
@@ -100,13 +100,12 @@ class Eventwire::Drivers::AMQP_UPPTEC
 
         #Bind to events
         subscriptions.each do |subscription|
-          #puts subscription
           event_queue.bind(@event_ex, :routing_key => subscription[0].to_s, :durable => true)
         end
         
 
         event_queue.subscribe(:ack => true) do |header, body|
-          #puts " [event] #{header.routing_key}: ---  #{body}"
+          puts " [event] #{header.routing_key}: ---  #{body}"
           
           handle_event header.routing_key, body
         
