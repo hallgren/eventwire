@@ -131,6 +131,7 @@ class Eventwire::Drivers::AMQP_UPPTEC
   end
 
   def handle_event event_name, event_data
+    puts "handle event #{event_name} #{event_data}"
     event_not_already_handled = true
 
     if self.respond_to?('event_validator')
