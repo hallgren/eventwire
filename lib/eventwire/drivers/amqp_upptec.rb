@@ -140,9 +140,8 @@ class Eventwire::Drivers::AMQP_UPPTEC
 
     if event_not_already_handled
       subscriptions.each do |subscription|
-        puts "#{subscription} #{event_name}"
         if (subscription[0].to_s == event_name)
-          puts "sub call #{event_data}"
+          puts "sub call #{event_data} #{subscription}"
           subscription[2].call event_data           
         end
       end
