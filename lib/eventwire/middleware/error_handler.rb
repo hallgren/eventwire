@@ -24,6 +24,7 @@ module Eventwire
         begin
           @app.handle_event event_name, event_data
         rescue Exception => ex
+          puts "\nAn error occurred in (hadnle_event): `#{ex.message}`\n#{ex.backtrace.join("\n")}\n"
           @logger.error "\nAn error occurred in (hadnle_event): `#{ex.message}`\n#{ex.backtrace.join("\n")}\n"
           @error_handler.call(ex)
         end
