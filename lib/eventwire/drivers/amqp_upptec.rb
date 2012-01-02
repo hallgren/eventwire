@@ -64,6 +64,9 @@ class Eventwire::Drivers::AMQP_UPPTEC
   end
 
   def start
+    loop do
+      sleep 1
+    end
     # AMQP.start(:host => @event_host, :port => @event_port, :user => @event_user, :pass => @event_password, :vhost => @event_vhost) do |connection|
   
     #   AMQP::Channel.new(connection, 2, :auto_recovery => true) do |channel|
