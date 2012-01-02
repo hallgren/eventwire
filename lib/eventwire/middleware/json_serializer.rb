@@ -16,7 +16,7 @@ module Eventwire
 
       def handle_event(event_name, event_data)
         puts "handle event #{event_name} #{event_data}"
-        @app.handle_event event_name, event_data
+        @app.handle_event event_name, parse_json(event_data)
       end
       
       private
