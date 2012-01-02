@@ -64,59 +64,56 @@ class Eventwire::Drivers::AMQP_UPPTEC
   end
 
   def start
-    loop do
-      sleep 1
-    end
-    # AMQP.start(:host => @event_host, :port => @event_port, :user => @event_user, :pass => @event_password, :vhost => @event_vhost) do |connection|
+    AMQP.start(:host => @event_host, :port => @event_port, :user => @event_user, :pass => @event_password, :vhost => @event_vhost) do |connection|
   
-    #   AMQP::Channel.new(connection, 2, :auto_recovery => true) do |channel|
-    #     #puts "connected to #{APP_CONFIG["eventwire_event_host"]} #{APP_CONFIG["eventwire_event_port"]} #{APP_CONFIG["eventwire_event_user"]} #{APP_CONFIG["eventwire_event_password"]} #{APP_CONFIG["eventwire_event_vhost"]} Exchange: #{APP_CONFIG["eventwire_event_exchange"]} Queue: #{APP_CONFIG["eventwire_event_queue"]}"
-    #     #puts subscriptions.count
-    #     #puts subscriptions
+      AMQP::Channel.new(connection, 2, :auto_recovery => true) do |channel|
+        #puts "connected to #{APP_CONFIG["eventwire_event_host"]} #{APP_CONFIG["eventwire_event_port"]} #{APP_CONFIG["eventwire_event_user"]} #{APP_CONFIG["eventwire_event_password"]} #{APP_CONFIG["eventwire_event_vhost"]} Exchange: #{APP_CONFIG["eventwire_event_exchange"]} Queue: #{APP_CONFIG["eventwire_event_queue"]}"
+        #puts subscriptions.count
+        #puts subscriptions
 
-    #     if channel.auto_recovering?
-    #       #puts "Channel #{channel.id} IS auto-recovering"
-    #     end
+        if channel.auto_recovering?
+          #puts "Channel #{channel.id} IS auto-recovering"
+        end
 
-    #     connection.on_tcp_connection_loss do |conn, settings|
+        connection.on_tcp_connection_loss do |conn, settings|
           
-    #       #puts "[network failure] Trying to reconnect..."
-    #       conn.reconnect(false, 2)
+          #puts "[network failure] Trying to reconnect..."
+          conn.reconnect(false, 2)
 
-    #     end
+        end
 
-    #     connection.on_recovery do |conn, settings|
-    #       puts "[recovery] Connection has recovered"
+        connection.on_recovery do |conn, settings|
+          puts "[recovery] Connection has recovered"
 
-    #       #Send error event abount the downtime
-    #       #mq = MessageQueue.new
-    #       #mq.message_type = "error"
-    #       #mq.message_name = "" #Not used
-    #       #mq.message_data = {:error_message => "Connection to Broker has been down: #{Rails.application.class.parent_name}"}.to_json
-    #       #mq.save
+          #Send error event abount the downtime
+          #mq = MessageQueue.new
+          #mq.message_type = "error"
+          #mq.message_name = "" #Not used
+          #mq.message_data = {:error_message => "Connection to Broker has been down: #{Rails.application.class.parent_name}"}.to_json
+          #mq.save
           
-    #     end
+        end
 
-    #     #Setup event handler queue
-    #     event_exchange = channel.topic(@event_ex, :durable => true)
-    #     event_queue    = channel.queue(@event_queue, :durable => true, :auto_delete => false)
+        #Setup event handler queue
+        event_exchange = channel.topic(@event_ex, :durable => true)
+        event_queue    = channel.queue(@event_queue, :durable => true, :auto_delete => false)
 
-    #     #Bind to events
-    #     subscriptions.each do |subscription|
-    #       event_queue.bind(@event_ex, :routing_key => subscription[0].to_s, :durable => true)
-    #     end
+        #Bind to events
+        subscriptions.each do |subscription|
+          event_queue.bind(@event_ex, :routing_key => subscription[0].to_s, :durable => true)
+        end
         
 
-    #     event_queue.subscribe(:ack => true) do |header, body|
-    #       puts " [event] #{header.routing_key}: ---  #{body}"
+        event_queue.subscribe(:ack => true) do |header, body|
+          puts " [event] #{header.routing_key}: ---  #{body}"
           
-    #       handle_event header.routing_key, body
+          handle_event header.routing_key, body
         
-    #       header.ack          
+          header.ack          
           
-    #     end
-    #   end
-    # end
+        end
+      end
+    end
   end
 
   def stop
@@ -124,13 +121,13 @@ class Eventwire::Drivers::AMQP_UPPTEC
   end
   
   def purge
-    # AMQP.start(:host => @event_host, :port => @event_port, :user => @event_user, :pass => @event_password, :vhost => @event_vhost) do |connection|
-    #   channel = AMQP::Channel.new(connection) 
-    #   queue = channel.queue(@event_queue, :durable => true, :auto_delete => false)
-    #   queue.purge(:nowait => true)
+    AMQP.start(:host => @event_host, :port => @event_port, :user => @event_user, :pass => @event_password, :vhost => @event_vhost) do |connection|
+      channel = AMQP::Channel.new(connection) 
+      queue = channel.queue(@event_queue, :durable => true, :auto_delete => false)
+      queue.purge(:nowait => true)
 
-    #   AMQP.stop { EM.stop } 
-    # end
+      AMQP.stop { EM.stop } 
+    end
   end
 
   def handle_event event_name, event_data
