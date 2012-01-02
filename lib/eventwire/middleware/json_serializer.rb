@@ -5,6 +5,7 @@ module Eventwire
     class JSONSerializer < Base
       def subscribe(event_name, handler_id, &handler)
         @app.subscribe event_name, handler_id do |data|
+          puts "json sub #{data}"
           handler.call parse_json(data)
         end
       end
@@ -14,6 +15,7 @@ module Eventwire
       end
 
       def handle_event(event_name, event_data)
+        puts "handle event #{event_name} #{event_data}"
         @app.handle_event event_name, parse_json(event_data)
       end
       
