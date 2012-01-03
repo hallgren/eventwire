@@ -15,7 +15,7 @@ module Eventwire
       end
 
       def handle_event(event_name, event_data)
-        puts "handle event #{event_name} #{event_data}"
+        puts "handle_event: JSONSerializer #{event_name} #{event_data}"
         @app.handle_event event_name, event_data
       end
       

@@ -142,7 +142,7 @@ class Eventwire::Drivers::AMQP_UPPTEC
       subscriptions.each do |subscription|
 
         if (subscription[0].to_s == event_name)
-          puts "sub call #{event_data} #{subscription}"
+          puts "handle_event: sub call  #{event_data} #{subscription}"
           subscription[2].call event_data.to_json           
         end
       end

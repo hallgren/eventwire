@@ -11,7 +11,7 @@ module Eventwire
       end
 
       def handle_event(event_name, event_data)
-        puts "biuld hash handle event #{event_name} #{event_data}"
+        puts "handle_event: DataObjects #{event_name} #{event_data}"
         @app.handle_event event_name, build_event(event_data)
       end
 
