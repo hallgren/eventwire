@@ -14,10 +14,10 @@ module Eventwire
         @app.publish event_name, event_data.to_json
       end
 
-      def handle_event(event_name, event_data)
-        puts "handle_event: JSONSerializer #{event_name} #{event_data}"
-        @app.handle_event event_name, event_data
-      end
+      #def handle_event(event_name, event_data)
+        #puts "handle_event: JSONSerializer #{event_name} #{event_data}"
+        #@app.handle_event event_name, event_data
+      #end
       
       private
       
